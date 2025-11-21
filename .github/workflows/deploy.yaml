@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: docker build -t ivanlow/react-test-up -f ./client/Dockerfile.dev ./client
-      - run: docker run -e CI=true ivanlow/react-test-up npm test
+      - run: docker build -t ivanlow/react-test -f ./client/Dockerfile.dev ./client
+      - run: docker run -e CI=true ivanlow/react-test npm test
 
   build-push-hub:
      runs-on: ubuntu-latest
@@ -19,15 +19,15 @@ jobs:
       - uses: actions/checkout@v4
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - run: docker build -t ivanlow/multi-client-up ./client
-      - run: docker build -t ivanlow/multi-nginx-up ./nginx
-      - run: docker build -t ivanlow/multi-server-up ./server
-      - run: docker build -t ivanlow/multi-worker-up ./worker
+      - run: docker build -t ivanlow/multi-client ./client
+      - run: docker build -t ivanlow/multi-nginx ./nginx
+      - run: docker build -t ivanlow/multi-server ./server
+      - run: docker build -t ivanlow/multi-worker ./worker
 
-      - run: docker push ivanlow/multi-client-up
-      - run: docker push ivanlow/multi-nginx-up
-      - run: docker push ivanlow/multi-server-up
-      - run: docker push ivanlow/multi-worker-up
+      - run: docker push ivanlow/multi-client
+      - run: docker push ivanlow/multi-nginx
+      - run: docker push ivanlow/multi-server
+      - run: docker push ivanlow/multi-worker
 
   # deploy:
   #     runs-on: ubuntu-latest
